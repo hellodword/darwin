@@ -1,0 +1,30 @@
+on: [push, pull_request, workflow_dispatch]
+name: Test
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [1.14.x, 1.15.x, 1.16.x, 1.17.x]
+        os: [ubuntu-20.04, ubuntu-18.04, macos-11, macos-10.15, windows-2022, windows-2019, windows-2016]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run 1
+        run: go run .
+      - name: Run 2
+        run: go run .
+      - name: Run 3
+        run: go run .
+      - name: Run 4
+        run: go run .
+      - name: Run 5
+        run: go run .
+
+
+
