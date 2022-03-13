@@ -18,13 +18,13 @@ jobs:
       - name: Run 1
         run: go run .
       - name: Run 2
-        run: go run .
+        run: go run . -freq 20
       - name: Run 3
-        run: go run .
+        run: go run . -freq 50
       - name: Run 4
-        run: go run .
+        run: go run . -freq 100
       - name: Run 5
-        run: go run .
+        run: go run . -freq 150
 
 
 

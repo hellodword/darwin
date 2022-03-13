@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -8,12 +9,14 @@ import (
 
 func main() {
 
+	freq := flag.Int64("freq", 13, "")
+	flag.Parse()
+
 	timer := time.NewTimer(time.Second * 3)
 	defer timer.Stop()
 
-	freq := time.Millisecond * 100 / 8
 	last := time.Now()
-	ticker := time.NewTicker(freq)
+	ticker := time.NewTicker(time.Duration(*freq) * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -25,7 +28,7 @@ func main() {
 		case t := <-ticker.C:
 			{
 				d := t.UnixNano()/int64(time.Millisecond) - last.UnixNano()/int64(time.Millisecond)
-				if time.Duration(d)*time.Millisecond > 2*freq {
+				if d-*freq > 20 {
 					panic(d)
 				}
 				last = t
